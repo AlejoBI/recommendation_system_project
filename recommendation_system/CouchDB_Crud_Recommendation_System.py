@@ -103,7 +103,7 @@ Seleccione una opcion:
             semestre = int(input("Ingrese el semestre del tutor: "))
             calificacion_promedio = float(input("Ingrese la calificación promedio del tutor: "))
             tutor = {
-                'idTutos':idTutor,
+                'idTutor':idTutor,
                 'tipo':'tutor',
                 'nombre':nombre,
                 'carrera':carrera,
