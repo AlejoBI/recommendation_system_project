@@ -1,0 +1,16 @@
+{
+  "_id": "_design/usuarios",
+  "_rev": "4-4b28cd37e16082df2b1dc63701c3eb07",
+  "views": {
+    "buscar_por_nombre": {
+      "map": "function(doc) { if (doc.tipo === 'usuario' && doc.nombre) { emit(doc.nombre, doc); } }"
+    },
+    "buscar_por_carrera": {
+      "map": "function(doc) { if (doc.tipo === 'usuario' && doc.carrera) { emit(doc.carrera, doc); } }"
+    },
+    "buscar_por_semestre": {
+      "map": "function(doc) { if (doc.tipo === 'usuario' && doc.semestre) { emit(doc.semestre, doc); } }"
+    }
+  },
+  "language": "javascript"
+}
