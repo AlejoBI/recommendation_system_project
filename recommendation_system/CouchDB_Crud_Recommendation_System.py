@@ -30,7 +30,8 @@ def consultar_documento(tipo, llave, valor):
         print(f"No se encontraron documentos para la llave '{llave}' y el valor '{valor}'.")
         time.sleep(1)
         return ""
-
+# Hola?
+    
 def crear_documento(coleccion, documento):
     nuevo_documento = db.save(documento)
     return nuevo_documento
