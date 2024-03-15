@@ -81,7 +81,7 @@ Seleccione una opcion:
                 time.sleep(1)
 
         elif opcion == "4":
-            idUsuario = 0
+            idUsuario = "001"
             nombre = input("Ingrese el nombre del usuario: ")
             carrera = input("Ingrese la carrera del usuario: ")
             semestre = int(input("Ingrese el semestre del usuario: "))
@@ -97,7 +97,7 @@ Seleccione una opcion:
             time.sleep(1)
 
         elif opcion == "5":
-            idTutor = 0
+            idTutor = "001"
             nombre = input("Ingrese el nombre del tutor: ")
             carrera = input("Ingrese la carrera del tutor: ")
             semestre = int(input("Ingrese el semestre del tutor: "))
@@ -115,7 +115,7 @@ Seleccione una opcion:
             time.sleep(1)
 
         elif opcion == "6":
-            idCurso = 0
+            idCurso = "001"
             nombre = input("Ingrese el nombre del curso: ")
             categoria = input("Ingrese la categoría del curso (artes, humanidades, ciencias básicas, tecnologia): ")
             modalidad = input("Ingrese la modalidad del curso (presencial, remoto): ")
