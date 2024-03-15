@@ -62,7 +62,7 @@ Seleccione una opcion:
 
         elif opcion == "2":
             tipo = "tutores"
-            llave = input("Ingrese la llave de búsqueda (nombre, carrera, semestre, calificacion_promedio): ")
+            llave = input("Ingrese la llave de búsqueda (nombre, carrera, semestre, calificacion_promedio): ").lower()
             valor = input(f"Ingrese el valor para la llave '{llave}': ")
             tutores = consultar_documento(tipo, llave, valor)
             print("Tutores encontrados:")
@@ -72,7 +72,7 @@ Seleccione una opcion:
 
         elif opcion == "3":
             tipo = "cursos"
-            llave = input("Ingrese la llave de búsqueda (nombre, categoria, modalidad, gratuito, certificado, calificacion_promedio): ")
+            llave = input("Ingrese la llave de búsqueda (nombre, categoria, modalidad, gratuito, certificado, calificacion_promedio): ").lower()
             valor = input(f"Ingrese el valor para la llave '{llave}': ")
             cursos = consultar_documento(tipo, llave, valor)
             print("Cursos encontrados:")
