@@ -35,6 +35,30 @@ def crear_documento(coleccion, documento):
     nuevo_documento = db.save(documento)
     return nuevo_documento
 
+def eliminar_documento_por_id(tipo, llave, valor):
+    # Utilizar la vista correspondiente según el tipo de documento
+    design_doc = f"_design/{tipo}"
+    view_name = f"buscar_por_{llave}"
+
+    # Verificar si el diseño y la vista existen
+    try:
+        db[design_doc]
+    except couchdb.ResourceNotFound:
+        print(f"El diseño '{design_doc}' y la vista '{view_name}' no existen.")
+        time.sleep(1)
+        return ""
+    
+    # Utilizar la vista para buscar el documento por la llave
+    try:
+        resultados = db.view(f"{tipo}/{view_name}", key=valor)
+        # Eliminamos los resultados encontrados con el id...
+        deleted_document = db.delete(resultados)
+        return deleted_document
+    except couchdb.ResourceNotFound:
+        print(f"No se encontraron documentos para la llave '{llave}' y el valor '{valor}'.")
+        time.sleep(1)
+        return ""
+
 def menu():
     while True:
         print("""---------------------------------------
@@ -45,7 +69,10 @@ Seleccione una opcion:
 4. Crear Usuario
 5. Crear Tutor
 6. Crear Curso
-7. Salir
+7. Eliminar Usuario
+8. Eliminar Tutor
+9. Eliminar Curso
+10. Salir
 ---------------------------------------""")
 
         opcion = input("Ingrese una opcion: ")
@@ -81,7 +108,7 @@ Seleccione una opcion:
                 time.sleep(1)
 
         elif opcion == "4":
-            idUsuario = "001"
+            idUsuario = str(input("Ingenese el id para el usuario: "))
             nombre = input("Ingrese el nombre del usuario: ")
             carrera = input("Ingrese la carrera del usuario: ")
             semestre = int(input("Ingrese el semestre del usuario: "))
@@ -97,7 +124,7 @@ Seleccione una opcion:
             time.sleep(1)
 
         elif opcion == "5":
-            idTutor = "001"
+            idTutor = str(input("Ingenese el id para el tutor: "))
             nombre = input("Ingrese el nombre del tutor: ")
             carrera = input("Ingrese la carrera del tutor: ")
             semestre = int(input("Ingrese el semestre del tutor: "))
@@ -115,7 +142,7 @@ Seleccione una opcion:
             time.sleep(1)
 
         elif opcion == "6":
-            idCurso = "001"
+            idCurso = str(input("Ingenese el id para el curso: "))
             nombre = input("Ingrese el nombre del curso: ")
             categoria = input("Ingrese la categoría del curso (artes, humanidades, ciencias básicas, tecnologia): ")
             modalidad = input("Ingrese la modalidad del curso (presencial, remoto): ")
@@ -141,6 +168,27 @@ Seleccione una opcion:
             time.sleep(1)
 
         elif opcion == "7":
+            tipo = "usuarios"
+            llave = "idUsuario"
+            valor = str(input("Ingrese la llave de (Id del usuario): ")).upper()
+            usuario = eliminar_documento_por_id(tipo, llave, valor)
+            print (usuario)
+
+        elif opcion == "8":
+            tipo = "tutores"
+            llave = "idTutor"
+            valor = str(input("Ingrese la llave de (Id del tutor): ")).upper()
+            tutor = eliminar_documento_por_id(tipo, llave, valor)
+            print (tutor)
+
+        elif opcion == "9":
+            tipo = "cursos"
+            llave = "idCurso"
+            valor = str(input("Ingrese la llave de (Id del curso): ")).upper()
+            curso = eliminar_documento_por_id(tipo, llave, valor)
+            print (curso)
+
+        elif opcion == "10":
             print("¡Hasta luego!")
             exit()
 
