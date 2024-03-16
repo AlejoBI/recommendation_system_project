@@ -51,9 +51,10 @@ def eliminar_documento_por_id(tipo, llave, valor):
     # Utilizar la vista para buscar el documento por la llave
     try:
         resultados = db.view(f"{tipo}/{view_name}", key=valor)
-        # Eliminamos los resultados encontrados con el id...
-        deleted_document = db.delete(resultados)
-        return deleted_document
+        # Eliminamos los resultados encontrados uno por uno
+        for row in resultados:
+            db.delete(db[row.id])
+        return "Documentos eliminados correctamente."
     except couchdb.ResourceNotFound:
         print(f"No se encontraron documentos para la llave '{llave}' y el valor '{valor}'.")
         time.sleep(1)
