@@ -105,10 +105,14 @@ Seleccione que desea hacer:
 
         if (opcionA == "1"):
 
-            opcionB = str(input("""Desea consultar:
-                            1. Usuario
-                            2. Tutor
-                            3. Curso"""))
+            print("""---------------------------------------
+Desea consultar:
+1. Usuario
+2. Tutor
+3. Curso
+---------------------------------------""")
+
+            opcionB = input("Ingrese una opcion: ")
 
             if opcionB == "1":
                 tipo = "usuarios"
@@ -146,10 +150,14 @@ Seleccione que desea hacer:
 
         elif opcionA == "2":
 
-            opcionB = str(input("""Desea consultar:
-                            1. Usuario
-                            2. Tutor
-                            3. Curso"""))
+            print("""---------------------------------------
+Desea crear:
+1. Usuario
+2. Tutor
+3. Curso
+---------------------------------------""")
+
+            opcionB = input("Ingrese una opcion: ")
             
             if opcionB == "1":
                 idUsuario = str(input("Ingenese el id para el usuario: "))
@@ -217,10 +225,14 @@ Seleccione que desea hacer:
 
         elif (opcionA == "3"):
 
-            opcionB = str(input("""Desea consultar:
-                            1. Usuario
-                            2. Tutor
-                            3. Curso"""))
+            print("""---------------------------------------
+Desea eliminar:
+1. Usuario
+2. Tutor
+3. Curso
+---------------------------------------""")
+
+            opcionB = input("Ingrese una opcion: ")
             
             if opcionB == "1":
                 tipo = "usuarios"
@@ -249,10 +261,14 @@ Seleccione que desea hacer:
 
         elif (opcionA == "4"):
             
-            opcionB = str(input("""Desea actualizar:
-                            1. Usuario
-                            2. Tutor
-                            3. Curso"""))
+            print("""---------------------------------------
+Desea actualizar:
+1. Usuario
+2. Tutor
+3. Curso
+---------------------------------------""")
+
+            opcionB = input("Ingrese una opcion: ")
             
             if opcionB == "1":
                 idUsuario = str(input("Ingrese el id para el usuario: "))
