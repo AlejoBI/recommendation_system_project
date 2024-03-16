@@ -89,6 +89,42 @@ def actualizar_documento_por_id(tipo, llave, valor, documento):
         time.sleep(1)
         return ""
 
+def verificar_id_existente(tipo, llave, valor):
+    # Utilizar la vista correspondiente según el tipo de documento
+    design_doc = f"_design/{tipo}"
+    view_name = f"buscar_por_{llave}"
+
+    # Verificar si el diseño y la vista existen
+    try:
+        db[design_doc]
+    except couchdb.ResourceNotFound:
+        print(f"El diseño '{design_doc}' y la vista '{view_name}' no existen.")
+        time.sleep(1)
+        return False
+
+    # Utilizar la vista para buscar el documento por la llave
+    try:
+        resultados = db.view(f"{tipo}/{view_name}", key=valor)
+        # Si hay resultados, el ID ya existe
+        if len(list(resultados)) > 0:
+            return True
+        else:
+            return False
+    except couchdb.ResourceNotFound:
+        print(f"No se encontraron documentos para la llave '{llave}' y el valor '{valor}'.")
+        time.sleep(1)
+        return False
+
+def verificar_curso_existente(idCurso):
+    # Buscar el curso por su ID
+    cursos = consultar_documento("cursos", "idCurso", idCurso)
+    if cursos:
+        # El curso existe
+        return True
+    else:
+        # El curso no existe
+        return False
+
 def menu():
     while True:
 
@@ -160,64 +196,94 @@ Desea crear:
             opcionB = input("Ingrese una opcion: ")
             
             if opcionB == "1":
-                idUsuario = str(input("Ingenese el id para el usuario: "))
-                nombre = input("Ingrese el nombre del usuario: ")
-                carrera = input("Ingrese la carrera del usuario: ")
-                semestre = int(input("Ingrese el semestre del usuario: "))
-                usuario = {
-                    'idUsuario':idUsuario,
-                    'tipo':'usuario',
-                    'nombre':nombre,
-                    'carrera':carrera,
-                    'semestre':semestre
-                }
-                nuevo_usuario = crear_documento('usuarios', usuario)
-                print(f"Usuario creado con ID: {nuevo_usuario}")
-                time.sleep(1)
+                while True:
+                    idUsuario = str(input("Ingrese el id para el usuario: "))
+                    # Verificar si el ID ya existe
+                    if verificar_id_existente("usuarios", "idUsuario", idUsuario):
+                        print("El ID de usuario ingresado ya existe. Por favor, ingrese otro ID.")
+                    else:
+                        nombre = input("Ingrese el nombre del usuario: ")
+                        carrera = input("Ingrese la carrera del usuario: ")
+                        semestre = int(input("Ingrese el semestre del usuario: "))
+                        idCurso = str(input("Ingrese el ID del curso al que está inscrito el usuario: "))
+                        # Verificar si el curso existe
+                        if verificar_curso_existente(idCurso):
+                            usuario = {
+                                'idUsuario': idUsuario,
+                                'tipo': 'usuario',
+                                'nombre': nombre,
+                                'carrera': carrera,
+                                'semestre': semestre,
+                                'idCurso': idCurso
+                            }
+                            nuevo_usuario = crear_documento('usuarios', usuario)
+                            print(f"Usuario creado con ID: {nuevo_usuario}")
+                            time.sleep(1)
+                            break
+                        else:
+                            print(f"El curso con ID '{idCurso}' no existe. Por favor, ingrese un ID de curso válido.")
 
             elif opcionB == "2":
-                idTutor = str(input("Ingenese el id para el tutor: "))
-                nombre = input("Ingrese el nombre del tutor: ")
-                carrera = input("Ingrese la carrera del tutor: ")
-                semestre = int(input("Ingrese el semestre del tutor: "))
-                calificacion_promedio = float(input("Ingrese la calificación promedio del tutor: "))
-                tutor = {
-                    'idTutor':idTutor,
-                    'tipo':'tutor',
-                    'nombre':nombre,
-                    'carrera':carrera,
-                    'semestre':semestre,
-                    'calificacion_promedio':calificacion_promedio
-                }
-                nuevo_tutor = crear_documento('tutores', tutor)
-                print(f"Tutor creado con ID: {nuevo_tutor}")
-                time.sleep(1)
+                while True:
+                    idTutor = str(input("Ingrese el id para el tutor: "))
+                    # Verificar si el ID ya existe
+                    if verificar_id_existente("tutores", "idTutor", idTutor):
+                        print("El ID de tutor ingresado ya existe. Por favor, ingrese otro ID.")
+                    else:
+                        nombre = input("Ingrese el nombre del tutor: ")
+                        carrera = input("Ingrese la carrera del tutor: ")
+                        semestre = int(input("Ingrese el semestre del tutor: "))
+                        calificacion_promedio = float(input("Ingrese la calificación promedio del tutor: "))
+                        idCurso = str(input("Ingrese el ID del curso que imparte el tutor: "))
+                        # Verificar si el curso existe
+                        if verificar_curso_existente(idCurso):
+                            tutor = {
+                                'idTutor': idTutor,
+                                'tipo': 'tutor',
+                                'nombre': nombre,
+                                'carrera': carrera,
+                                'semestre': semestre,
+                                'calificacion_promedio': calificacion_promedio,
+                                'idCurso': idCurso
+                            }
+                            nuevo_tutor = crear_documento('tutores', tutor)
+                            print(f"Tutor creado con ID: {nuevo_tutor}")
+                            time.sleep(1)
+                            break
+                        else:
+                            print(f"El curso con ID '{idCurso}' no existe. Por favor, ingrese un ID de curso válido.")
 
             elif opcionB == "3":
-                idCurso = str(input("Ingenese el id para el curso: "))
-                nombre = input("Ingrese el nombre del curso: ")
-                categoria = input("Ingrese la categoría del curso (artes, humanidades, ciencias básicas, tecnologia): ")
-                modalidad = input("Ingrese la modalidad del curso (presencial, remoto): ")
-                gratuito = input("¿El curso es gratuito? (V/F): ").upper() == 'V'
-                precio = float(input("Ingrese el precio del curso (0 si es gratuito): "))
-                duracion = int(input("Ingrese la duración del curso (en horas): "))
-                certificado = input("¿El curso otorga certificado? (V/F): ").upper() == 'V'
-                calificacion_promedio = float(input("Ingrese la calificación promedio del curso (0.0 a 5.0): "))
-                curso = {
-                    'idCurso':idCurso,
-                    'tipo':'curso',
-                    'nombre':nombre,
-                    'categoria':categoria,
-                    'modalidad':modalidad,
-                    'gratuito':gratuito,
-                    'precio':precio,
-                    'duracion':duracion,
-                    'certificado':certificado,
-                    'calificacion_promedio':calificacion_promedio
-                }
-                nuevo_curso = crear_documento('cursos', curso)
-                print(f"Curso creado con ID: {nuevo_curso}")
-                time.sleep(1)
+                while True:
+                    idCurso = str(input("Ingrese el id para el curso: "))
+                    # Verificar si el ID ya existe
+                    if verificar_id_existente("cursos", "idCurso", idCurso):
+                        print("El ID de curso ingresado ya existe. Por favor, ingrese otro ID.")
+                    else:
+                        nombre = input("Ingrese el nombre del curso: ")
+                        categoria = input("Ingrese la categoría del curso (artes, humanidades, ciencias básicas, tecnologia): ")
+                        modalidad = input("Ingrese la modalidad del curso (presencial, remoto): ")
+                        gratuito = input("¿El curso es gratuito? (V/F): ").upper() == 'V'
+                        precio = float(input("Ingrese el precio del curso (0 si es gratuito): "))
+                        duracion = int(input("Ingrese la duración del curso (en horas): "))
+                        certificado = input("¿El curso otorga certificado? (V/F): ").upper() == 'V'
+                        calificacion_promedio = float(input("Ingrese la calificación promedio del curso (0.0 a 5.0): "))
+                        curso = {
+                            'idCurso': idCurso,
+                            'tipo': 'curso',
+                            'nombre': nombre,
+                            'categoria': categoria,
+                            'modalidad': modalidad,
+                            'gratuito': gratuito,
+                            'precio': precio,
+                            'duracion': duracion,
+                            'certificado': certificado,
+                            'calificacion_promedio': calificacion_promedio
+                        }
+                        nuevo_curso = crear_documento('cursos', curso)
+                        print(f"Curso creado con ID: {nuevo_curso}")
+                        time.sleep(1)
+                        break
 
             else:
                 print("Opción inválida. Intente nuevamente.")
@@ -275,36 +341,45 @@ Desea actualizar:
                 nombre = input("Ingrese el nombre del usuario: ")
                 carrera = input("Ingrese la carrera del usuario: ")
                 semestre = int(input("Ingrese el semestre del usuario: "))
-                usuario = {
-                    'idUsuario': idUsuario,
-                    'tipo': 'usuario',
-                    'nombre': nombre,
-                    'carrera': carrera,
-                    'semestre': semestre
-                }
-                # Llamar a la función para actualizar el usuario
-                usuario_actualizado = actualizar_documento_por_id('usuarios', 'idUsuario', idUsuario, usuario)
-                print (usuario_actualizado)
-                time.sleep(1)
+                idCurso = str(input("Ingrese el ID del curso al que está inscrito el usuario: "))
+                # Verificar si el curso existe
+                if verificar_curso_existente(idCurso):
+                    usuario = {
+                        'idUsuario': idUsuario,
+                        'tipo': 'usuario',
+                        'nombre': nombre,
+                        'carrera': carrera,
+                        'semestre': semestre,
+                        'idCurso': idCurso
+                    }
+                    # Llamar a la función para actualizar el usuario
+                    usuario_actualizado = actualizar_documento_por_id('usuarios', 'idUsuario', idUsuario, usuario)
+                    print (usuario_actualizado)
+                    time.sleep(1)
+                else:
+                    print(f"El curso con ID '{idCurso}' no existe. Por favor, ingrese un ID de curso válido.")
 
             elif opcionB == "2":
-                idTutor = str(input("Ingenese el id para el tutor: "))
+                idTutor = str(input("Ingrese el id para el tutor: "))
                 nombre = input("Ingrese el nombre del tutor: ")
                 carrera = input("Ingrese la carrera del tutor: ")
                 semestre = int(input("Ingrese el semestre del tutor: "))
                 calificacion_promedio = float(input("Ingrese la calificación promedio del tutor: "))
-                tutor = {
-                    'idTutor':idTutor,
-                    'tipo':'tutor',
-                    'nombre':nombre,
-                    'carrera':carrera,
-                    'semestre':semestre,
-                    'calificacion_promedio':calificacion_promedio
-                }
-                # Llamar a la función para actualizar el usuario
-                tutor_actualizado = actualizar_documento_por_id('tutores', 'idTutor', idTutor, tutor)
-                print (tutor_actualizado)
-                time.sleep(1)
+                if verificar_curso_existente(idCurso):
+                    tutor = {
+                        'idTutor':idTutor,
+                        'tipo':'tutor',
+                        'nombre':nombre,
+                        'carrera':carrera,
+                        'semestre':semestre,
+                        'calificacion_promedio':calificacion_promedio
+                    }
+                    # Llamar a la función para actualizar el usuario
+                    tutor_actualizado = actualizar_documento_por_id('tutores', 'idTutor', idTutor, tutor)
+                    print (tutor_actualizado)
+                    time.sleep(1)
+                else:
+                    print(f"El curso con ID '{idCurso}' no existe. Por favor, ingrese un ID de curso válido.")
 
             elif opcionB == "3":
                 idCurso = str(input("Ingenese el id para el curso: "))
@@ -340,7 +415,7 @@ Desea actualizar:
         else:
                 print("Hasta Luego!")
                 time.sleep(1)
-            
+
 #---------------------------------------------------
 # INICIO DE TODO EL SISTEMA
 while True:
