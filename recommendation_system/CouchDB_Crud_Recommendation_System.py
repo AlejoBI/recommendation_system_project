@@ -205,23 +205,30 @@ Desea crear:
                         nombre = input("Ingrese el nombre del usuario: ")
                         carrera = input("Ingrese la carrera del usuario: ")
                         semestre = int(input("Ingrese el semestre del usuario: "))
-                        idCurso = str(input("Ingrese el ID del curso al que está inscrito el usuario: "))
-                        # Verificar si el curso existe
-                        if verificar_curso_existente(idCurso):
+                        idCursos = []
+                        while True:
+                            idCurso = str(input("Ingrese el ID del curso al que está inscrito el usuario (o 'fin' para terminar): "))
+                            if idCurso.lower() == 'fin':
+                                break
+                            if verificar_curso_existente(idCurso):
+                                idCursos.append(idCurso)
+                            else:
+                                print(f"El curso con ID '{idCurso}' no existe. Por favor, ingrese un ID de curso válido.")
+                        if idCursos:
                             usuario = {
                                 'idUsuario': idUsuario,
                                 'tipo': 'usuario',
                                 'nombre': nombre,
                                 'carrera': carrera,
                                 'semestre': semestre,
-                                'idCurso': idCurso
+                                'idCursos': idCursos
                             }
                             nuevo_usuario = crear_documento('usuarios', usuario)
                             print(f"Usuario creado con ID: {nuevo_usuario}")
                             time.sleep(1)
                             break
                         else:
-                            print(f"El curso con ID '{idCurso}' no existe. Por favor, ingrese un ID de curso válido.")
+                            print("No se ingresaron cursos válidos. Por favor, inténtelo nuevamente.")
 
             elif opcionB == "2":
                 while True:
@@ -234,9 +241,16 @@ Desea crear:
                         carrera = input("Ingrese la carrera del tutor: ")
                         semestre = int(input("Ingrese el semestre del tutor: "))
                         calificacion_promedio = float(input("Ingrese la calificación promedio del tutor: "))
-                        idCurso = str(input("Ingrese el ID del curso que imparte el tutor: "))
-                        # Verificar si el curso existe
-                        if verificar_curso_existente(idCurso):
+                        idCursos = []
+                        while True:
+                            idCurso = str(input("Ingrese el ID del curso que imparte el tutor (o 'fin' para terminar): "))
+                            if idCurso.lower() == 'fin':
+                                break
+                            if verificar_curso_existente(idCurso):
+                                idCursos.append(idCurso)
+                            else:
+                                print(f"El curso con ID '{idCurso}' no existe. Por favor, ingrese un ID de curso válido.")
+                        if idCursos:
                             tutor = {
                                 'idTutor': idTutor,
                                 'tipo': 'tutor',
@@ -244,14 +258,14 @@ Desea crear:
                                 'carrera': carrera,
                                 'semestre': semestre,
                                 'calificacion_promedio': calificacion_promedio,
-                                'idCurso': idCurso
+                                'idCursos': idCursos
                             }
                             nuevo_tutor = crear_documento('tutores', tutor)
                             print(f"Tutor creado con ID: {nuevo_tutor}")
                             time.sleep(1)
                             break
                         else:
-                            print(f"El curso con ID '{idCurso}' no existe. Por favor, ingrese un ID de curso válido.")
+                            print("No se ingresaron cursos válidos. Por favor, inténtelo nuevamente.")
 
             elif opcionB == "3":
                 while True:
@@ -341,23 +355,30 @@ Desea actualizar:
                 nombre = input("Ingrese el nombre del usuario: ")
                 carrera = input("Ingrese la carrera del usuario: ")
                 semestre = int(input("Ingrese el semestre del usuario: "))
-                idCurso = str(input("Ingrese el ID del curso al que está inscrito el usuario: "))
-                # Verificar si el curso existe
-                if verificar_curso_existente(idCurso):
+                idCursos = []
+                while True:
+                    idCurso = str(input("Ingrese el ID del curso al que está inscrito el usuario (o 'fin' para terminar): "))
+                    if idCurso.lower() == 'fin':
+                        break
+                    if verificar_curso_existente(idCurso):
+                        idCursos.append(idCurso)
+                    else:
+                        print(f"El curso con ID '{idCurso}' no existe. Por favor, ingrese un ID de curso válido.")
+                if idCursos:
                     usuario = {
                         'idUsuario': idUsuario,
                         'tipo': 'usuario',
                         'nombre': nombre,
                         'carrera': carrera,
                         'semestre': semestre,
-                        'idCurso': idCurso
+                        'idCursos': idCursos
                     }
                     # Llamar a la función para actualizar el usuario
                     usuario_actualizado = actualizar_documento_por_id('usuarios', 'idUsuario', idUsuario, usuario)
                     print (usuario_actualizado)
                     time.sleep(1)
                 else:
-                    print(f"El curso con ID '{idCurso}' no existe. Por favor, ingrese un ID de curso válido.")
+                    print("No se ingresaron cursos válidos. Por favor, inténtelo nuevamente.")
 
             elif opcionB == "2":
                 idTutor = str(input("Ingrese el id para el tutor: "))
@@ -365,21 +386,31 @@ Desea actualizar:
                 carrera = input("Ingrese la carrera del tutor: ")
                 semestre = int(input("Ingrese el semestre del tutor: "))
                 calificacion_promedio = float(input("Ingrese la calificación promedio del tutor: "))
-                if verificar_curso_existente(idCurso):
+                idCursos = []
+                while True:
+                    idCurso = str(input("Ingrese el ID del curso que imparte el tutor (o 'fin' para terminar): "))
+                    if idCurso.lower() == 'fin':
+                        break
+                    if verificar_curso_existente(idCurso):
+                        idCursos.append(idCurso)
+                    else:
+                        print(f"El curso con ID '{idCurso}' no existe. Por favor, ingrese un ID de curso válido.")
+                if idCursos:
                     tutor = {
-                        'idTutor':idTutor,
-                        'tipo':'tutor',
-                        'nombre':nombre,
-                        'carrera':carrera,
-                        'semestre':semestre,
-                        'calificacion_promedio':calificacion_promedio
+                        'idTutor': idTutor,
+                        'tipo': 'tutor',
+                        'nombre': nombre,
+                        'carrera': carrera,
+                        'semestre': semestre,
+                        'calificacion_promedio': calificacion_promedio,
+                        'idCursos': idCursos
                     }
-                    # Llamar a la función para actualizar el usuario
+                    # Llamar a la función para actualizar el tutor
                     tutor_actualizado = actualizar_documento_por_id('tutores', 'idTutor', idTutor, tutor)
                     print (tutor_actualizado)
                     time.sleep(1)
                 else:
-                    print(f"El curso con ID '{idCurso}' no existe. Por favor, ingrese un ID de curso válido.")
+                    print("No se ingresaron cursos válidos. Por favor, inténtelo nuevamente.")
 
             elif opcionB == "3":
                 idCurso = str(input("Ingenese el id para el curso: "))
@@ -414,7 +445,7 @@ Desea actualizar:
 
         else:
                 print("Hasta Luego!")
-                time.sleep(1)
+                exit()
 
 #---------------------------------------------------
 # INICIO DE TODO EL SISTEMA
