@@ -21,7 +21,7 @@
       "map": "function(doc) { if (doc.tipo === 'curso' && doc.certificado) { emit(doc.certificado, doc); } }"
     },
     "buscar_por_calificacion_promedio": {
-      "map": "function(doc) { if (doc.tipo === 'curso' && doc.calificacion_promedio) { emit(doc.calificacion_promedio, doc); } }"
+      "map": "function(doc) { if (doc.tipo === 'curso' && doc.calificacion) { emit(doc.calificacion, doc); } }"
     }
   },
   "language": "javascript"
