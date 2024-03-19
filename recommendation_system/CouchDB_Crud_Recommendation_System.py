@@ -1,6 +1,12 @@
 import time
 import couchdb
 
+#--------------------------------------------------------------
+#Desarrolladores
+#Ludy Astrid Agudelo Bravo - 2221008
+#Alejandro Bravo Isajar - 2220332
+#---------------------------------------------------------------
+
 # Conectar a la base de datos CouchDB
 conn_string = "http://AlejandroBI:ABI5846s@localhost:5984"
 server = couchdb.Server(conn_string)
@@ -78,7 +84,7 @@ def actualizar_documento_por_id(tipo, llave, valor, documento):
     try:
         # Obtener el documento utilizando la vista
         resultados = db.view(f"{tipo}/{view_name}", key=valor)
-        # Actualiza los resultados encnotrados
+        # Actualiza los resultados encontrados
         for row in resultados:
             # Actualizar el documento con el nuevo valor
             row.value.update(documento)
@@ -125,6 +131,45 @@ def verificar_curso_existente(idCurso):
         # El curso no existe
         return False
 
+def calificar(tipo, llave, valor, idUsuario, calificacion):
+    # Utilizar la vista correspondiente según el tipo de documento
+    design_doc = f"_design/{tipo}"
+    view_name = f"buscar_por_{llave}"
+
+    # Verificar si el diseño y la vista existen
+    try:
+        db[design_doc]
+    except couchdb.ResourceNotFound:
+        print(f"El diseño '{design_doc}' y la vista '{view_name}' no existen.")
+        time.sleep(1)
+        return ""
+
+    # Verificar la existencia del usuario que califica
+    if not verificar_id_existente("usuarios", "idUsuario", idUsuario):
+        print("El usuario no existe.")
+        return False
+
+    # Verificar la existencia del tutor o curso
+    if not verificar_id_existente(tipo, llave, valor):
+        print(f" El ID proporcionado no existe.")
+        return False
+    
+    # Utilizar la vista para buscar el documento por la llave
+    try:
+        resultados = db.view(f"{tipo}/{view_name}", key=valor)
+        # Actualizar las calificaciones en los documentos encontrados
+        for row in resultados:
+            documento = row.value
+            documento['calificaciones'][idUsuario] = calificacion
+            db.save(documento)
+        print(f"{tipo.capitalize()} ha sido calificado correctamente.")
+        return ""
+    except couchdb.ResourceNotFound:
+        print(f"No se encontraron documentos para la llave '{llave}' y el valor '{valor}'.")
+        time.sleep(1)
+        return ""
+    
+
 def menu():
     while True:
 
@@ -134,7 +179,8 @@ Seleccione que desea hacer:
 2. Crear
 3. Eliminar
 4. Actualizar
-5. Nada
+5. Calificar un "Tutor" o "Curso"
+6. Nada
 ---------------------------------------""")
 
         opcionA = input("Ingrese una opcion: ")
@@ -162,7 +208,7 @@ Desea consultar:
 
             elif opcionB == "2":
                 tipo = "tutores"
-                llave = input("Ingrese la llave de búsqueda (nombre, carrera, semestre, calificacion_promedio): ").lower()
+                llave = input("Ingrese la llave de búsqueda (nombre, carrera, semestre, calificacion): ").lower()
                 valor = input(f"Ingrese el valor para la llave '{llave}': ")
                 tutores = consultar_documento(tipo, llave, valor)
                 print("Tutores encontrados:")
@@ -172,7 +218,7 @@ Desea consultar:
 
             elif opcionB == "3":
                 tipo = "cursos"
-                llave = input("Ingrese la llave de búsqueda (nombre, categoria, modalidad, gratuito, certificado, calificacion_promedio): ").lower()
+                llave = input("Ingrese la llave de búsqueda (nombre, categoria, modalidad, gratuito, certificado, calificacion): ").lower()
                 valor = input(f"Ingrese el valor para la llave '{llave}': ")
                 cursos = consultar_documento(tipo, llave, valor)
                 print("Cursos encontrados:")
@@ -240,7 +286,6 @@ Desea crear:
                         nombre = input("Ingrese el nombre del tutor: ")
                         carrera = input("Ingrese la carrera del tutor: ")
                         semestre = int(input("Ingrese el semestre del tutor: "))
-                        calificacion_promedio = float(input("Ingrese la calificación promedio del tutor: "))
                         idCursos = []
                         while True:
                             idCurso = str(input("Ingrese el ID del curso que imparte el tutor (o 'fin' para terminar): "))
@@ -257,8 +302,8 @@ Desea crear:
                                 'nombre': nombre,
                                 'carrera': carrera,
                                 'semestre': semestre,
-                                'calificacion_promedio': calificacion_promedio,
-                                'idCursos': idCursos
+                                'idCursos': idCursos,
+                                'calificaciones': {}
                             }
                             nuevo_tutor = crear_documento('tutores', tutor)
                             print(f"Tutor creado con ID: {nuevo_tutor}")
@@ -281,7 +326,6 @@ Desea crear:
                         precio = float(input("Ingrese el precio del curso (0 si es gratuito): "))
                         duracion = int(input("Ingrese la duración del curso (en horas): "))
                         certificado = input("¿El curso otorga certificado? (V/F): ").upper() == 'V'
-                        calificacion_promedio = float(input("Ingrese la calificación promedio del curso (0.0 a 5.0): "))
                         curso = {
                             'idCurso': idCurso,
                             'tipo': 'curso',
@@ -292,7 +336,7 @@ Desea crear:
                             'precio': precio,
                             'duracion': duracion,
                             'certificado': certificado,
-                            'calificacion_promedio': calificacion_promedio
+                            'calificaciones': {}
                         }
                         nuevo_curso = crear_documento('cursos', curso)
                         print(f"Curso creado con ID: {nuevo_curso}")
@@ -385,7 +429,6 @@ Desea actualizar:
                 nombre = input("Ingrese el nombre del tutor: ")
                 carrera = input("Ingrese la carrera del tutor: ")
                 semestre = int(input("Ingrese el semestre del tutor: "))
-                calificacion_promedio = float(input("Ingrese la calificación promedio del tutor: "))
                 idCursos = []
                 while True:
                     idCurso = str(input("Ingrese el ID del curso que imparte el tutor (o 'fin' para terminar): "))
@@ -402,8 +445,9 @@ Desea actualizar:
                         'nombre': nombre,
                         'carrera': carrera,
                         'semestre': semestre,
-                        'calificacion_promedio': calificacion_promedio,
-                        'idCursos': idCursos
+                        'idCursos': idCursos,
+                        'calificacion': calificacion
+
                     }
                     # Llamar a la función para actualizar el tutor
                     tutor_actualizado = actualizar_documento_por_id('tutores', 'idTutor', idTutor, tutor)
@@ -421,7 +465,6 @@ Desea actualizar:
                 precio = float(input("Ingrese el precio del curso (0 si es gratuito): "))
                 duracion = int(input("Ingrese la duración del curso (en horas): "))
                 certificado = input("¿El curso otorga certificado? (V/F): ").upper() == 'V'
-                calificacion_promedio = float(input("Ingrese la calificación promedio del curso (0.0 a 5.0): "))
                 curso = {
                     'idCurso':idCurso,
                     'tipo':'curso',
@@ -432,13 +475,45 @@ Desea actualizar:
                     'precio':precio,
                     'duracion':duracion,
                     'certificado':certificado,
-                    'calificacion_promedio':calificacion_promedio
+                    'calificacion': calificacion
                 }
                 # Llamar a la función para actualizar el usuario
                 curso_actualizado = actualizar_documento_por_id('cursos', 'idCurso', idCurso, curso)
                 print (curso_actualizado)
                 time.sleep(1)
             
+            else:
+                print("Opción inválida. Intente nuevamente.")
+                time.sleep(1)
+
+        elif (opcionA == "5"):
+            
+            print("""---------------------------------------
+Desea calificar:
+1. Tutor
+2. Curso
+---------------------------------------""")
+            
+            opcionB = input("Ingrese una opción: ")
+
+            if opcionB == "1":
+                tipo = "tutores"
+                llave = "idTutor"
+                valor = str(input("Ingrese el ID del tutor a calificar: "))
+                idUsuario = input("Ingrese el ID del usuario que está calificando: ")
+                calificacion = float(input("Ingrese la calificación (0.0 - 5.0): "))
+                resultado = calificar(tipo, llave, valor, idUsuario, calificacion)
+                print(resultado)
+
+            elif opcionB == "2":
+                tipo = "cursos"
+                llave = "idCurso"
+                valor = str(input("Ingrese el ID del curso a calificar: "))
+                idUsuario = input("Ingrese el ID del usuario que está calificando: ")
+                calificacion = float(input("Ingrese la calificación (0.0 - 5.0): "))
+                resultado = calificar(tipo, llave, valor, idUsuario, calificacion)
+                print(resultado)
+
             else:
                 print("Opción inválida. Intente nuevamente.")
                 time.sleep(1)

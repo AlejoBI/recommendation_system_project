@@ -2,6 +2,9 @@
   "_id": "_design/cursos",
   "_rev": "3-804d24219a68e8069cccf9b5ee8039eb",
   "views": {
+    "buscar_por_idCurso": {
+      "map": "function(doc) { if (doc.tipo === 'curso' && doc.idCurso) { emit(doc.idCurso, doc); } }"
+    },
     "buscar_por_nombre": {
       "map": "function(doc) { if (doc.tipo === 'curso' && doc.nombre) { emit(doc.nombre, doc); } }"
     },

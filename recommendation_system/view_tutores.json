@@ -2,6 +2,9 @@
   "_id": "_design/tutores",
   "_rev": "4-e669b845e2f4c202e2058b336dda81a7",
   "views": {
+    "buscar_por_idTutor": {
+      "map": "function(doc) { if (doc.tipo === 'tutor' && doc.idTutor) { emit(doc.idTutor, doc); } }"
+    },
     "buscar_por_nombre": {
       "map": "function(doc) { if (doc.tipo === 'tutor' && doc.nombre) { emit(doc.nombre, doc); } }"
     },
@@ -11,8 +14,8 @@
     "buscar_por_semestre": {
       "map": "function(doc) { if (doc.tipo === 'tutor' && doc.semestre) { emit(doc.semestre, doc); } }"
     },
-    "buscar_por_calificacion_promedio": {
-      "map": "function(doc) { if (doc.tipo === 'tutor' && doc.calificacion_promedio) { emit(doc.calificacion_promedio, doc); } }"
+    "buscar_por_calificacion": {
+      "map": "function(doc) { if (doc.tipo === 'tutor' && doc.calificacion) { emit(doc.calificacion, doc); } }"
     }
   },
   "language": "javascript"

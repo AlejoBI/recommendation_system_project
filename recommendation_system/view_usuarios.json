@@ -2,6 +2,9 @@
   "_id": "_design/usuarios",
   "_rev": "4-4b28cd37e16082df2b1dc63701c3eb07",
   "views": {
+    "buscar_por_idUsuario": {
+      "map": "function(doc) { if (doc.tipo === 'usuario' && doc.idUsuario) { emit(doc.idUsuario, doc); } }"
+    },
     "buscar_por_nombre": {
       "map": "function(doc) { if (doc.tipo === 'usuario' && doc.nombre) { emit(doc.nombre, doc); } }"
     },
