@@ -1,0 +1,181 @@
+{
+    "total_rows": 7,
+    "offset": 0,
+    "rows": [
+        {
+            "id": "18944a921dbd8470fb657eb758008efb",
+            "key": "18944a921dbd8470fb657eb758008efb",
+            "value": {
+                "rev": "3-120175a9a9bfbe369f5ec2e3e45e21d2"
+            },
+            "doc": {
+                "_id": "18944a921dbd8470fb657eb758008efb",
+                "_rev": "3-120175a9a9bfbe369f5ec2e3e45e21d2",
+                "idCurso": "001",
+                "tipo": "curso",
+                "nombre": "Matematica",
+                "categoria": "artes",
+                "modalidad": "presencial",
+                "gratuito": true,
+                "precio": 0,
+                "duracion": 12,
+                "certificado": true,
+                "calificaciones": {
+                    "001": 4.5,
+                    "002": 3.2
+                }
+            }
+        },
+        {
+            "id": "18944a921dbd8470fb657eb7580093ce",
+            "key": "18944a921dbd8470fb657eb7580093ce",
+            "value": {
+                "rev": "1-b9dd3e31da06e0942ce5907343bf773b"
+            },
+            "doc": {
+                "_id": "18944a921dbd8470fb657eb7580093ce",
+                "_rev": "1-b9dd3e31da06e0942ce5907343bf773b",
+                "idUsuario": "001",
+                "tipo": "usuario",
+                "nombre": "Pepe",
+                "carrera": "I",
+                "semestre": 5,
+                "idCursos": [
+                    "001"
+                ]
+            }
+        },
+        {
+            "id": "18944a921dbd8470fb657eb75800c8a8",
+            "key": "18944a921dbd8470fb657eb75800c8a8",
+            "value": {
+                "rev": "1-3b95e993a0021ff7bca63952add49b3e"
+            },
+            "doc": {
+                "_id": "18944a921dbd8470fb657eb75800c8a8",
+                "_rev": "1-3b95e993a0021ff7bca63952add49b3e",
+                "idUsuario": "002",
+                "tipo": "usuario",
+                "nombre": "Pepa",
+                "carrera": "Locutora",
+                "semestre": 3,
+                "idCursos": [
+                    "001"
+                ]
+            }
+        },
+        {
+            "id": "18944a921dbd8470fb657eb75800c90a",
+            "key": "18944a921dbd8470fb657eb75800c90a",
+            "value": {
+                "rev": "3-a8feb2bab1ccd416ee7da9161bd9b131"
+            },
+            "doc": {
+                "_id": "18944a921dbd8470fb657eb75800c90a",
+                "_rev": "3-a8feb2bab1ccd416ee7da9161bd9b131",
+                "idTutor": "001",
+                "tipo": "tutor",
+                "nombre": "Ludy",
+                "carrera": "Cine",
+                "semestre": 1,
+                "calificaciones": {
+                    "002": 3.1,
+                    "001": 4
+                },
+                "idCursos": [
+                    "001"
+                ]
+            }
+        },
+        {
+            "id": "_design/cursos",
+            "key": "_design/cursos",
+            "value": {
+                "rev": "8-3e9a24fd6a0a0436c1afad690756a92d"
+            },
+            "doc": {
+                "_id": "_design/cursos",
+                "_rev": "8-3e9a24fd6a0a0436c1afad690756a92d",
+                "views": {
+                    "buscar_por_idCurso": {
+                        "map": "function(doc) { if (doc.tipo === 'curso' && doc.idCurso) { emit(doc.idCurso, doc); } }"
+                    },
+                    "buscar_por_nombre": {
+                        "map": "function(doc) { if (doc.tipo === 'curso' && doc.nombre) { emit(doc.nombre, doc); } }"
+                    },
+                    "buscar_por_categoria": {
+                        "map": "function(doc) { if (doc.tipo === 'curso' && doc.categoria) { emit(doc.categoria, doc); } }"
+                    },
+                    "buscar_por_modalidad": {
+                        "map": "function(doc) { if (doc.tipo === 'curso' && doc.modalidad) { emit(doc.modalidad, doc); } }"
+                    },
+                    "buscar_por_gratuito": {
+                        "map": "function(doc) { if (doc.tipo === 'curso' && doc.gratuito) { emit(doc.gratuito, doc); } }"
+                    },
+                    "buscar_por_certificado": {
+                        "map": "function(doc) { if (doc.tipo === 'curso' && doc.certificado) { emit(doc.certificado, doc); } }"
+                    },
+                    "buscar_por_calificacion_promedio": {
+                        "map": "function(doc) { if (doc.tipo === 'curso' && doc.calificacion_promedio) { emit(doc.calificacion_promedio, doc); } }"
+                    }
+                },
+                "language": "javascript"
+            }
+        },
+        {
+            "id": "_design/tutores",
+            "key": "_design/tutores",
+            "value": {
+                "rev": "9-0573653d8f38252bf798df468bf2fd83"
+            },
+            "doc": {
+                "_id": "_design/tutores",
+                "_rev": "9-0573653d8f38252bf798df468bf2fd83",
+                "views": {
+                    "buscar_por_idTutor": {
+                        "map": "function(doc) { if (doc.tipo === 'tutor' && doc.idTutor) { emit(doc.idTutor, doc); } }"
+                    },
+                    "buscar_por_nombre": {
+                        "map": "function(doc) { if (doc.tipo === 'tutor' && doc.nombre) { emit(doc.nombre, doc); } }"
+                    },
+                    "buscar_por_carrera": {
+                        "map": "function(doc) { if (doc.tipo === 'tutor' && doc.carrera) { emit(doc.carrera, doc); } }"
+                    },
+                    "buscar_por_semestre": {
+                        "map": "function(doc) { if (doc.tipo === 'tutor' && doc.semestre) { emit(doc.semestre, doc); } }"
+                    },
+                    "buscar_por_calificacion_promedio": {
+                        "map": "function(doc) { if (doc.tipo === 'tutor' && doc.calificacion_promedio) { emit(doc.calificacion_promedio, doc); } }"
+                    }
+                },
+                "language": "javascript"
+            }
+        },
+        {
+            "id": "_design/usuarios",
+            "key": "_design/usuarios",
+            "value": {
+                "rev": "8-68cf589ee210f84bee26936a40e4653e"
+            },
+            "doc": {
+                "_id": "_design/usuarios",
+                "_rev": "8-68cf589ee210f84bee26936a40e4653e",
+                "views": {
+                    "buscar_por_idUsuario": {
+                        "map": "function(doc) { if (doc.tipo === 'usuario' && doc.idUsuario) { emit(doc.idUsuario, doc); } }"
+                    },
+                    "buscar_por_nombre": {
+                        "map": "function(doc) { if (doc.tipo === 'usuario' && doc.nombre) { emit(doc.nombre, doc); } }"
+                    },
+                    "buscar_por_carrera": {
+                        "map": "function(doc) { if (doc.tipo === 'usuario' && doc.carrera) { emit(doc.carrera, doc); } }"
+                    },
+                    "buscar_por_semestre": {
+                        "map": "function(doc) { if (doc.tipo === 'usuario' && doc.semestre) { emit(doc.semestre, doc); } }"
+                    }
+                },
+                "language": "javascript"
+            }
+        }
+    ]
+}
