@@ -1,0 +1,14 @@
+{
+    "id": 1,
+    "name": "Diego",
+    "Cursos": [
+        {
+            "id": 1,
+            "nombre": "BD1"
+        },
+        {
+            "id": 2,
+            "nombre": "BD2"
+        }
+    ]
+}

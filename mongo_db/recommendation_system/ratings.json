@@ -1,0 +1,9 @@
+{
+    "idTutoresCurso": 1,
+    "ratings":[
+        {
+            "user_id": 1,
+            "rating": 4.0
+        }
+    ]
+}
