@@ -1,13 +1,13 @@
 {
     "id": 1,
     "name": "Diego",
-    "Cursos": [
+    "cursos": [
         {
-            "id": 1,
+            "curso_id": 1,
             "nombre": "BD1"
         },
         {
-            "id": 2,
+            "curso_id": 2,
             "nombre": "BD2"
         }
     ]
