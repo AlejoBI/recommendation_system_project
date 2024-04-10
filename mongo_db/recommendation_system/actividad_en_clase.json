@@ -1,0 +1,9 @@
+db.getCollection('coursesRatings').aggregate(
+  [
+    { $match: { curso_id: 2 } },
+    { $unwind: { path: '$ratings' } },
+    { $match: { 'ratings.rating': { $gte: 4 } } },
+    { $project: { nombre_curso: 1 } }
+  ],
+  { maxTimeMS: 60000, allowDiskUse: true }
+);
