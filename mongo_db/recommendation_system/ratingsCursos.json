@@ -1,9 +1,23 @@
-{
-    "idTutoresCurso": 1,
+[
+    {
+    "curso_id": 1,
+    "nombre_curso": "BD1",
     "ratings":[
         {
             "user_id": 1,
             "rating": 4.0
         }
     ]
-}
+    },
+    
+    {
+    "curso_id": 2,
+    "nombre_curso": "BD2",
+    "ratings":[
+        {
+            "user_id": 1,
+            "rating": 5.0
+        }
+    ]
+    }
+]
