@@ -1,14 +1,14 @@
 {
-    "id": 1,
-    "name": "Diego",
+    "id_tutor": 1,
+    "name_tutor": "Diego",
     "cursos": [
         {
             "curso_id": 1,
-            "nombre": "BD1"
+            "nombre_curso": "BD1"
         },
         {
             "curso_id": 2,
-            "nombre": "BD2"
+            "nombre_curso": "BD2"
         }
     ]
 }
