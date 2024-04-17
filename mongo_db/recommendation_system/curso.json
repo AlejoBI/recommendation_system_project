@@ -1,0 +1,40 @@
+[
+    {
+    "curso_id": 1,
+    "nombre_curso": "BD1",
+    "modalidad": "Presencial",
+    "ratings": [
+        {
+        "usario_id": 1, "rating": 5
+        }
+    ]
+    },
+
+    {
+    "curso_id": 2,
+    "nombre_curso": "Matematica",
+    "modalidad": "Presencial",
+    "ratings": [
+        {
+        "usario_id": 4, "rating": 3
+        },
+        {
+        "usario_id": 3, "rating": 4.5
+        }
+    ]
+    },
+    
+    {
+    "curso_id": 3,
+    "nombre_curso": "Ingenieria de software",
+    "modalidad": "Virtual",
+    "ratings": [
+        {
+        "usario_id": 2, "rating": 4
+        },
+        {
+        "usario_id": 3, "rating": 4
+        }
+    ]
+    }
+]

@@ -1,0 +1,62 @@
+[
+    {
+    "tutor_id": 1,
+    "nombre_tutor": "Ludy Agudelo",
+    "cursos": [
+        {
+        "curso_id": 2
+        },
+        {
+        "curso_id": 3
+        }
+    ],
+    "ratings": [
+        {
+        "usario_id": 1,
+        "rating": 5
+        },
+        {
+        "usario_id": 2,
+        "rating": 4
+        }
+    ]
+    },
+    {
+    "tutor_id": 2,
+    "nombre_tutor": "Alejandro Bravo",
+    "cursos": [
+        {
+        "curso_id": 1
+        }
+    ],
+    "ratings": [
+        {
+        "usario_id": 1,
+        "rating": 5
+        },
+        {
+        "usario_id": 3,
+        "rating": 4
+        }
+    ]
+    },
+    {
+    "tutor_id": 3,
+    "nombre_tutor": "Juan Perez",
+    "cursos": [
+        {
+        "curso_id": 3
+        }
+    ],
+    "ratings": [
+        {
+        "usario_id": 3,
+        "rating": 3
+        },
+        {
+        "usario_id": 4,
+        "rating": 2
+        }
+    ]
+    }
+]

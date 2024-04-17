@@ -1,0 +1,55 @@
+[
+    {   
+    "usuario_id": 1,
+    "nombre_usuario": "Juan Garcia",
+    "carrera": "Ingeniería Informática",
+    "semestre": 3,
+    "cursos": [
+        {
+        "curso_id": 1
+        },
+        {
+        "curso_id": 2
+        }
+    ]
+    },
+    {   
+    "usuario_id": 2,
+    "nombre_usuario": "Pepa Bravo",
+    "carrera": "Ingeniería Informática",
+    "semestre": 5,
+    "cursos": [
+        {
+        "curso_id": 3
+        }
+    ]
+    },
+    {   
+    "usuario_id": 3,
+    "nombre_usuario": "Luis Jimenez",
+    "carrera": "Ingeniería Multimedia",
+    "semestre": 4,
+    "cursos": [
+        {
+        "curso_id": 1
+        },
+        {
+        "curso_id": 2
+        }
+    ]
+    },
+    {   
+    "usuario_id": "4",
+    "nombre_usuario": "Ana Romero",
+    "carrera": "Ingeniería Mecanica",
+    "semestre": 7,
+    "cursos": [
+        {
+        "curso_id": 2
+        },
+        {
+        "curso_id": 3
+        }
+    ]
+    }
+]
