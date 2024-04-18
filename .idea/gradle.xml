@@ -8,7 +8,7 @@
         <option name="gradleJvm" value="openjdk-21" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$/mongo_db/recommendation_system/server/apiweb" />
+            <option value="$PROJECT_DIR$/mongo_db/recommendation_system/server/Apiweb" />
           </set>
         </option>
       </GradleProjectSettings>
