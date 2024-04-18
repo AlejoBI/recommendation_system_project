@@ -5,7 +5,7 @@
     "modalidad": "Presencial",
     "ratings": [
         {
-        "usario_id": 1, "rating": 5
+        "rating": 5
         }
     ]
     },
@@ -16,10 +16,10 @@
     "modalidad": "Presencial",
     "ratings": [
         {
-        "usario_id": 4, "rating": 3
+        "rating": 3
         },
         {
-        "usario_id": 3, "rating": 4.5
+        "rating": 4.5
         }
     ]
     },
@@ -30,10 +30,10 @@
     "modalidad": "Virtual",
     "ratings": [
         {
-        "usario_id": 2, "rating": 4
+        "rating": 4
         },
         {
-        "usario_id": 3, "rating": 4
+        "rating": 4
         }
     ]
     }
