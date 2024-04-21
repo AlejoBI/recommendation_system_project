@@ -1,4 +1,4 @@
-package com.apiweb;
+package com.example.apiweb;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

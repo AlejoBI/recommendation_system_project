@@ -1,4 +1,4 @@
-package com.apiweb;
+package com.example.apiweb;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
