@@ -17,26 +17,30 @@ public class CursoServiceImp implements ICursoService{
 
     @Override
     public String crearCurso(CursoModel curso) {
-        return null;
+        this.cursoRepository.save(curso);
+        return "El curso " + curso.getNombre_curso() + " fue creado exitosamente";
     }
 
     @Override
     public List<CursoModel> listarCursos() {
-        return null;
+        return this.cursoRepository.findAll();
     }
 
     @Override
     public Optional<CursoModel> obtenerCursoPorId(int cursoId) {
-        return Optional.empty();
+        return this.cursoRepository.findById(cursoId);
     }
 
     @Override
     public String eliminarCursoPorId(int cursoId) {
-        return null;
+        Optional<CursoModel> cursoRef = this.cursoRepository.findById(cursoId);
+        this.cursoRepository.deleteById(cursoId);
+        return "El curso " + cursoRef.get().getCurso_id() + " fue eliminado con exito.";
     }
 
     @Override
     public String actualizarCursoPorId(CursoModel curso) {
-        return null;
+        this.cursoRepository.save(curso);
+        return "El curso con id " + curso.getCurso_id() + " fue actualizado con exito.";
     }
 }
