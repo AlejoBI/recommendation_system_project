@@ -71,4 +71,13 @@ public class TutorController {
         tutorService.agregarCursoATutor(tutorId, curso);
         return new ResponseEntity<String>("Curso agregado correctamente al tutor.", HttpStatus.OK);
     }
+
+    //Eliminar un tutor por Id
+    @DeleteMapping("/{tutorId}")
+    public ResponseEntity<String> eliminarTutorPorId(@PathVariable Integer tutorId) {
+        TutorModel tutor = this.tutorService.obtenerTutorPorId(tutorId)
+                .orElseThrow(() -> new RecursoNoEncontradoException("Error! No se encontró el tutor con el id " + tutorId));
+        return new ResponseEntity<String>(tutorService.eliminarTutorPorId(tutorId),HttpStatus.OK);
+    }
 }
+

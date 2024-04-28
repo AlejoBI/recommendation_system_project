@@ -70,4 +70,12 @@ public class CursoController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
+
+    //Eliminar un Curso por Id
+    @DeleteMapping("/{cursoId}")
+    public ResponseEntity<String> eliminarCursoPorId(@PathVariable Integer cursoId) {
+        CursoModel curso = this.cursoService.obtenerCursoPorId(cursoId)
+                .orElseThrow(() -> new RecursoNoEncontradoException("Error! No se encontró el curso con el id " + cursoId));
+        return new ResponseEntity<String>(cursoService.eliminarCursoPorId(cursoId),HttpStatus.OK);
+    }
 }
