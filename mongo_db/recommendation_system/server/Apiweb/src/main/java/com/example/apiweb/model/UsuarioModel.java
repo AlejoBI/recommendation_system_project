@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UsuarioModel {
-    @Id
     private Integer usuario_id;
     private String nombre_usuario;
     private String carrera;

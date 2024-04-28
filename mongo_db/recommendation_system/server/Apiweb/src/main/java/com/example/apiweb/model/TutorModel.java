@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TutorModel {
-    @Id
     private Integer tutor_id;
     private String tutor_name;
     private CursoModel cursos;
