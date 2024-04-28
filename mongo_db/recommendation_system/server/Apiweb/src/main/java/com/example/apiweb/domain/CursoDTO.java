@@ -17,5 +17,5 @@ public class CursoDTO {
     private String modalidad;
 
     @JsonProperty("ratings")
-    List<Map<String, Integer>> ratings;
+    List<Map<String, Double>> ratings;
 }

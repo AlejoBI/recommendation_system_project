@@ -15,5 +15,5 @@ public class CursoModel {
     private Integer curso_id;
     private String nombre_curso;
     private String modalidad;
-    private Boolean ratings;
+    private Double ratings;
 }
