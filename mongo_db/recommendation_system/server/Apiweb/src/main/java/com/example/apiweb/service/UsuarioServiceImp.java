@@ -1,5 +1,6 @@
 package com.example.apiweb.service;
 
+import com.example.apiweb.exception.RecursoNoEncontradoException;
 import com.example.apiweb.model.CursoModel;
 import com.example.apiweb.model.UsuarioModel;
 import com.example.apiweb.repository.IUsuarioRepository;
@@ -7,8 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Primary
@@ -42,5 +42,29 @@ public class UsuarioServiceImp implements IUsuarioService{
     public String actualizarUsuarioPorId(UsuarioModel usuario) {
         this.usuarioRepository.save(usuario);
         return "El usuario con id " + usuario.getUsuario_id() + " fue actualizado con exito.";
+    }
+
+    @Override
+    public String agregarCursoAUsuario(int usuarioId, CursoModel curso) {
+        Optional<UsuarioModel> usuarioOptional = this.usuarioRepository.findById(usuarioId);
+        if (usuarioOptional.isPresent()) {
+            UsuarioModel usuario = usuarioOptional.get();
+
+            Map<String, Integer> cursoMap = new HashMap<>();
+            cursoMap.put("curso_id", curso.getCurso_id());
+
+            List<Map<String, Integer>> cursos = usuario.getCursos();
+            if (cursos == null) {
+                cursos = new ArrayList<>();
+            }
+            cursos.add(cursoMap);
+
+            usuario.setCursos(cursos);
+            this.usuarioRepository.save(usuario);
+
+            return "Curso agregado con éxito al usuario con id " + usuarioId;
+        } else {
+            throw new RecursoNoEncontradoException("Error! No se encontró el usuario con el id " + usuarioId);
+        }
     }
 }

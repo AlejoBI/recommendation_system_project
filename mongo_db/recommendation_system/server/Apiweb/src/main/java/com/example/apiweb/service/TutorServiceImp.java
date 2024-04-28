@@ -1,5 +1,6 @@
 package com.example.apiweb.service;
 
+import com.example.apiweb.exception.RecursoNoEncontradoException;
 import com.example.apiweb.model.CursoModel;
 import com.example.apiweb.model.TutorModel;
 import com.example.apiweb.repository.ITutorRepository;
@@ -7,8 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Primary
@@ -19,7 +19,7 @@ public class TutorServiceImp implements ITutorService{
     @Override
     public String crearTutor(TutorModel tutor) {
         this.tutorRepository.save(tutor);
-        return "El tutor " + tutor.getTutor_name() + " fue creado exitosamente";
+        return "El tutor " + tutor.getNombre_tutor() + " fue creado exitosamente";
     }
 
     @Override
@@ -43,5 +43,29 @@ public class TutorServiceImp implements ITutorService{
     public String actualizarTutorPorId(TutorModel tutor) {
         this.tutorRepository.save(tutor);
         return "El tutor con id " + tutor.getTutor_id() + " fue actualizado con exito.";
+    }
+
+    @Override
+    public String agregarCursoATutor(int tutorId, CursoModel curso) {
+        Optional<TutorModel> tutorOptional = this.tutorRepository.findById(tutorId);
+        if (tutorOptional.isPresent()) {
+            TutorModel tutor = tutorOptional.get();
+
+            Map<String, Integer> cursoMap = new HashMap<>();
+            cursoMap.put("curso_id", curso.getCurso_id());
+
+            List<Map<String, Integer>> cursos = tutor.getCursos();
+            if (cursos == null) {
+                cursos = new ArrayList<>();
+            }
+            cursos.add(cursoMap);
+
+            tutor.setCursos(cursos);
+            this.tutorRepository.save(tutor);
+
+            return "Curso agregado con éxito al tutor con id " + tutorId;
+        } else {
+            throw new RecursoNoEncontradoException("Error! No se encontró el tutor con el id " + tutorId);
+        }
     }
 }

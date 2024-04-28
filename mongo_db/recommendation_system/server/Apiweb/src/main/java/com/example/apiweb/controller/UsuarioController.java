@@ -2,7 +2,9 @@ package com.example.apiweb.controller;
 
 import com.example.apiweb.exception.CamposInvalidosException;
 import com.example.apiweb.exception.RecursoNoEncontradoException;
+import com.example.apiweb.model.CursoModel;
 import com.example.apiweb.model.UsuarioModel;
+import com.example.apiweb.service.ICursoService;
 import com.example.apiweb.service.IUsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +19,8 @@ import java.util.List;
 public class UsuarioController {
     @Autowired
     private IUsuarioService usuarioService;
+    @Autowired
+    private ICursoService cursoService;
 
     //Crear un usuario
     @PostMapping("/")
@@ -47,15 +51,28 @@ public class UsuarioController {
                 .orElseThrow(() -> new RecursoNoEncontradoException("Error! No se encontró el usuario con el id " + usuarioId));
         //Obtenemos los datos que se van actualizar del usuario y que son enviados del json
         String nombreActualizar = detallesUsuario.getNombre_usuario();
+        String carreraActualizar = detallesUsuario.getCarrera();
+        String semestreActualizar = detallesUsuario.getSemestre();
 
         //Verificamos que estos campos actualizar no sean nulos o vacios y controlamos la excepcion
-        if (nombreActualizar != null && !nombreActualizar.isEmpty()) {
+        if (nombreActualizar != null && !nombreActualizar.isEmpty() && carreraActualizar != null && !carreraActualizar.isEmpty() && semestreActualizar != null && !semestreActualizar.isEmpty()) {
             //Asignamos los valores que vamos actualizar del tutor
             usuario.setNombre_usuario(nombreActualizar);
+            usuario.setCarrera(carreraActualizar);
+            usuario.setSemestre(semestreActualizar);
             //Guardamos los cambios
             return new ResponseEntity<String>(usuarioService.actualizarUsuarioPorId(usuario), HttpStatus.OK);
         } else {
-            throw new CamposInvalidosException("Error! El nombre del tutor no puede estar vacio");
+            throw new CamposInvalidosException("Error! Debes llenar todos los campos para actualizar el usuario.");
         }
+    }
+
+    // Agregar un curso a un usuario
+    @PostMapping("/{usuarioId}/curso/{cursoId}")
+    public ResponseEntity<String> agregarCursoAUsuario(@PathVariable Integer usuarioId, @PathVariable Integer cursoId) {
+        CursoModel curso = this.cursoService.obtenerCursoPorId(cursoId)
+                .orElseThrow(() -> new RecursoNoEncontradoException("Error! No se encontró el curso con el id " + cursoId));
+        usuarioService.agregarCursoAUsuario(usuarioId, curso);
+        return new ResponseEntity<String>("Curso agregado correctamente al usuario.", HttpStatus.OK);
     }
 }
