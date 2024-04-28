@@ -22,7 +22,7 @@ public class CursoController {
     @PostMapping("/")
     public ResponseEntity<String> crearCurso(@RequestBody CursoModel curso) {
         cursoService.crearCurso(curso);
-        return new ResponseEntity<String>(cursoService.crearCurso(curso), HttpStatus.OK);
+        return new ResponseEntity<String>("Curso creado correctamente.",HttpStatus.OK);
     }
 
     //Listar Cursos
@@ -58,6 +58,16 @@ public class CursoController {
             return new ResponseEntity<String>(cursoService.actualizarCursoPorId(curso), HttpStatus.OK);
         } else {
             throw new CamposInvalidosException("Error! El nombre y la modalidad de el curso no pueden estar vacio");
+        }
+    }
+
+    @PutMapping("/{cursoId}/rating")
+    public ResponseEntity<String> agregarRatingACurso(@PathVariable Integer cursoId, @RequestBody double rating) {
+        try {
+            this.cursoService.agregarRatingACurso(cursoId, rating);
+            return new ResponseEntity<>("Rating agregado con éxito al curso con id " + cursoId, HttpStatus.OK);
+        } catch (RecursoNoEncontradoException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
 }

@@ -7,7 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Document(collection = "usuarios")
+@Document(collection = "usuario")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
