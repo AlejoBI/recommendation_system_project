@@ -22,7 +22,7 @@ public class TutorController {
     @PostMapping("/")
     public ResponseEntity<String> crearTutor(@RequestBody TutorModel tutor) {
         tutorService.crearTutor(tutor);
-        return new ResponseEntity<String>(tutorService.crearTutor(tutor), HttpStatus.OK);
+        return new ResponseEntity<String>("Tutor creado correctamente.", HttpStatus.OK);
     }
 
     //Listar tutores

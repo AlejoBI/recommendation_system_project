@@ -22,7 +22,7 @@ public class UsuarioController {
     @PostMapping("/")
     public ResponseEntity<String> crearUsuario(@RequestBody UsuarioModel usuario) {
         usuarioService.crearUsuario(usuario);
-        return new ResponseEntity<String>(usuarioService.crearUsuario(usuario), HttpStatus.OK);
+        return new ResponseEntity<String>("Usuario creado correctamente.", HttpStatus.OK);
     }
 
     //Listar Usuarios

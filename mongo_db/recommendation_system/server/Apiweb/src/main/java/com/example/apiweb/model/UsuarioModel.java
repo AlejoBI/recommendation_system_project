@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Document(collection = "usuario")
 @Data
 @AllArgsConstructor
@@ -16,5 +18,5 @@ public class UsuarioModel {
     private String nombre_usuario;
     private String carrera;
     private String semestre;
-    private String curso;
+    private List<CursoModel> cursos;
 }
