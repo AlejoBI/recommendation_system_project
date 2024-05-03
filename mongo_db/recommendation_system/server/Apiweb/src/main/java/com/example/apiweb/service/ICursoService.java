@@ -13,4 +13,5 @@ public interface ICursoService {
     String eliminarCursoPorId(int cursoId);
     String actualizarCursoPorId(CursoModel curso);
     void agregarRatingACurso(int cursoId, double rating);
+    List<CursoModel> mostrarCursosRatingsMayoresAN(Double ratings);
 }
