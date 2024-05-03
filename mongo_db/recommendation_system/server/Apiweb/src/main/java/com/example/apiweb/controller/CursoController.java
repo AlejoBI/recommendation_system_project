@@ -78,4 +78,10 @@ public class CursoController {
                 .orElseThrow(() -> new RecursoNoEncontradoException("Error! No se encontró el curso con el id " + cursoId));
         return new ResponseEntity<String>(cursoService.eliminarCursoPorId(cursoId),HttpStatus.OK);
     }
+
+    @GetMapping("/ratingsMayoresAN/{ratings}")
+    public ResponseEntity<List<CursoModel>> mostrarCursosRatingsMayoresAN(@PathVariable Double ratings) {
+        List<CursoModel> cursos = this.cursoService.mostrarCursosRatingsMayoresAN(ratings);
+        return new ResponseEntity<>(cursos, HttpStatus.OK);
+    }
 }

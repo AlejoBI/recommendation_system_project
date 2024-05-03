@@ -63,4 +63,9 @@ public class CursoServiceImp implements ICursoService{
             throw new RecursoNoEncontradoException("Error! No se encontró el curso con el id " + cursoId);
         }
     }
+
+    @Override
+    public List<CursoModel> mostrarCursosRatingsMayoresAN(Double ratings) {
+        return this.cursoRepository.listarCursosRatingsMayoresAN(ratings);
+    }
 }
