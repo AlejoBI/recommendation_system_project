@@ -20,5 +20,5 @@ public class TutorModel {
     private String nombre_tutor;
 
     @JsonProperty("cursos")
-    List<Map<String, Integer>> cursos;
+    List<Map<String, Object>> cursos;
 }

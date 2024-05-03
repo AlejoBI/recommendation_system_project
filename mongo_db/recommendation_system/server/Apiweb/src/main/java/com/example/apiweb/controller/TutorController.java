@@ -79,5 +79,11 @@ public class TutorController {
                 .orElseThrow(() -> new RecursoNoEncontradoException("Error! No se encontró el tutor con el id " + tutorId));
         return new ResponseEntity<String>(tutorService.eliminarTutorPorId(tutorId),HttpStatus.OK);
     }
+
+    @GetMapping("/tutoresCursosMAN/{ratings}")
+    public ResponseEntity<List<TutorModel>> mostrarTutoresCursosMAN(@PathVariable Double ratings) {
+        List<TutorModel> tutores = tutorService.mostrarTutoresCursosMayoresAN(ratings);
+        return new ResponseEntity<>(tutores, HttpStatus.OK);
+    }
 }
 
