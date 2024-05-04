@@ -71,6 +71,6 @@ public class TutorServiceImp implements ITutorService{
 
     @Override
     public List<TutorModel> mostrarTutoresCursosMayoresAN(Double ratings) {
-        return this.tutorRepository.listarTtutoresCursosMayoresAN(ratings);
+        return this.tutorRepository.listarTutoresCursosMayoresAN(ratings);
     }
 }

@@ -12,5 +12,5 @@ public interface ITutorRepository extends MongoRepository<TutorModel, Integer>{
             "{ '$match': { 'cursosData.ratings': { '$elemMatch': { '$gt': ?0 } } } }",
             "{ '$unwind': '$cursosData' }",
             "{ '$group': { '_id': '$_id', 'nombre_tutor': { '$first': '$nombre_tutor' }, 'cursos': { '$push': '$cursosData' } } }"})
-    List<TutorModel> listarTtutoresCursosMayoresAN(Double ratings);
+    List<TutorModel> listarTutoresCursosMayoresAN(Double ratings);
 }
