@@ -1,3 +1,3 @@
-Id, Nombre, Modalidad, Calificacion
-1, BD1, Presencial, 5
-2, BD2, Virtual, 4
+Id, Nombre, Modalidad
+1, BD1, Presencial
+2, BD2, Virtual
