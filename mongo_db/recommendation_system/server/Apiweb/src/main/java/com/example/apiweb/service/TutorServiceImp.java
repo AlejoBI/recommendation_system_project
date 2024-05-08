@@ -51,10 +51,10 @@ public class TutorServiceImp implements ITutorService{
         if (tutorOptional.isPresent()) {
             TutorModel tutor = tutorOptional.get();
 
-            Map<String, Integer> cursoMap = new HashMap<>();
+            Map<String, Object> cursoMap = new HashMap<>();
             cursoMap.put("curso_id", curso.getCurso_id());
 
-            List<Map<String, Integer>> cursos = tutor.getCursos();
+            List<Map<String, Object>> cursos = tutor.getCursos();
             if (cursos == null) {
                 cursos = new ArrayList<>();
             }
@@ -67,5 +67,10 @@ public class TutorServiceImp implements ITutorService{
         } else {
             throw new RecursoNoEncontradoException("Error! No se encontró el tutor con el id " + tutorId);
         }
+    }
+
+    @Override
+    public List<TutorModel> mostrarTutoresCursosMayoresAN(Double ratings) {
+        return this.tutorRepository.listarTutoresCursosMayoresAN(ratings);
     }
 }

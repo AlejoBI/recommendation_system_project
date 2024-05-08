@@ -14,4 +14,5 @@ public interface ITutorService {
     String eliminarTutorPorId(int tutorId);
     String actualizarTutorPorId(TutorModel tutor);
     String agregarCursoATutor(int tutorId, CursoModel curso);
+    List<TutorModel> mostrarTutoresCursosMayoresAN(Double ratings);
 }
